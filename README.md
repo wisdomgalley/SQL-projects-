@@ -27,3 +27,42 @@ order by PID, Amount desc;
 select * from sales
 where Amount > 10000
 and SaleDate >= '2022-01-01';
+
+select SaleDate, Amount from sales
+where amount > 10000 and year(SaleDate) = 2022
+order by amount desc;
+
+-- BETWEEN condition
+select * from sales 
+where Boxes > 0 and Boxes <= 50;
+
+select * from sales 
+where Boxes between 0 and 50;
+
+-- working with dates
+select SaleDate, Amount, Boxes, weekday(SaleDate) as 'Day of week'  
+from sales
+where weekday(SaleDate) = 4; 
+
+-- using other tables
+select * from people
+where team = 'Delish' or team = 'Jucies';
+
+select * from people
+where team in ('Delish' , 'Jucies');
+
+select * from people
+where salesperson like 'B%';
+
+select * from people
+where salesperson like '%B%'; 
+
+select * from sales;
+
+select SaleDate, Amount,
+		case when amount < 1000 then 'under 1K'
+			when amount < 5000 then 'under 5k'
+            when amount < 10000 then 'under 10k'
+            else '10k or more'
+            end as 'amount category'
+from sales;
