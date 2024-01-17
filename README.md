@@ -66,3 +66,37 @@ select SaleDate, Amount,
             else '10k or more'
             end as 'amount category'
 from sales;
+
+-- using JOINS
+
+select * from sales;
+
+select * from people;
+
+select s.SaleDate, s.Amount, p.Salesperson, p.SPID, p.spid
+from sales s
+join people p on p.spid = s.SPID;
+
+
+select s.SaleDate, s.Amount, pr.Product
+from sales s
+left join products pr on pr.pid = s.pid;
+
+
+-- JOINING MULTIPLE TABLES
+select s.SaleDate, p.Salesperson, pr.Product, p.team
+from sales s
+join people p on p.SPID = s.SPID 
+join products pr on pr.pid = s.pid;
+
+
+-- JOIN with CONDITIONS
+select s.SaleDate, p.Salesperson, pr.Product, p.team, s.Amount
+from sales s
+join people p on p.SPID = s.SPID 
+join products pr on pr.pid = s.pid
+join geo g on g.geoid = s.geoid
+where s.amount < 500
+and p.team = ''
+and g.geo in ('new zealand', 'india')
+order by saledate
