@@ -99,4 +99,37 @@ join geo g on g.geoid = s.geoid
 where s.amount < 500
 and p.team = ''
 and g.geo in ('new zealand', 'india')
-order by saledate
+order by saledate;
+
+-- Group by, aggregates and creating reports with SQL
+
+select geoID, sum(amount), avg(AMOUNT), sum(boxes)
+from sales
+group by geoID;
+
+select g.geo, sum(amount), avg(AMOUNT), sum(boxes)
+from sales s
+join geo g on s.GeoID = g.GeoID
+group by g.geo;
+
+
+select pr.category, p.team, sum(boxes), sum(amount)
+from sales s
+join people p on p.spid = s.spid
+join products pr on pr.pid = s.pid
+where p.team <> ''
+group by pr.category, p.team
+order by pr.category, p.team;
+
+select pr.product, sum(s.amount) as 'total amount'
+from sales s
+join products pr on pr.pid = s.pid
+group by pr.product
+order by 'total amount' desc;
+
+select pr.product, sum(s.amount) as 'total amount'
+from sales s
+join products pr on pr.pid = s.pid
+group by pr.product
+order by 'total amount' desc
+limit 10
