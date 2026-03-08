@@ -1,1 +1,36 @@
+--Total revenue generated = '43561546'
+
+SELECT COUNT(*)
+FROM sales;
+
+--Which products generate the most revenue globally?
+
+select p.Product, sum(s.Amount) as 'total revenue'
+from sales s 
+join products p on p.PID = s.pid
+group by p.product
+order by 'total revenue';
+
+-- Which regions generate the most revenue?
+
+select g.Region, sum(s.Amount) as 'total revenue'
+from sales s 
+join geo g on g.GeoID = s.GeoID
+group by g.Region
+order by 'total revenue' desc;
+
+-- Which product categories drive revenue?
+select pr.Category, sum(amount) as 'revenue'
+from sales s
+join products pr on s.pid = pr.pid
+group by pr.category
+order by 'revenue' desc;
+
+-- Which regions generate the most revenue per customer?
+
+select g.geo, sum(s.amount) / sum(s.customers) as 'revenue per customer' 
+from sales s
+join geo g on s.geoid = g.geoid
+group by g.geo
+order by 'revenue per customer' desc;
 
